@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,12 +20,14 @@ public class Person {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "last_name")
+    @Column(name = "lastname")
     private String lastname;
+    @Column(name = "age")
+    private Integer age;
     @Column(name = "username")
     private String username;
     @Column(name = "date_of_birth")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Column(name = "sex")
     private char sex;
     @Column(name = "weight")
