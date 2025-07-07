@@ -1,5 +1,6 @@
 package com.FitnessTrack.MyFitnessTrack.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,10 @@ public class ProductStats {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "energy_value")
-    private Long energyValue;
+    private Double energyValue;
     @Column(name = "fats")
     private Double fats;
-    @Column(name = "farbs")
+    @Column(name = "carbs")
     private Double carbs;
     @Column(name = "sugar")
     private Double sugar;
@@ -31,8 +32,8 @@ public class ProductStats {
     @Column(name = "salt")
     private Double salt;
 
-    @OneToOne(targetEntity = Product.class)
-    @JsonManagedReference
+    @OneToOne(mappedBy = "stats")
+    @JsonBackReference
     private Product product;
 
 }

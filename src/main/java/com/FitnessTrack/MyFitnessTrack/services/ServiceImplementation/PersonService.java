@@ -4,7 +4,6 @@ import com.FitnessTrack.MyFitnessTrack.model.dto.PersonDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Person;
 import com.FitnessTrack.MyFitnessTrack.repositories.PersonRepository;
 import com.FitnessTrack.MyFitnessTrack.services.PersonServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ import java.util.Optional;
 public class PersonService implements PersonServices {
 
     private final PersonRepository repository;
-    private ObjectMapper mapper;
 
     @Autowired
     public PersonService(PersonRepository repository) {
@@ -98,7 +96,6 @@ public class PersonService implements PersonServices {
     public Person updatePerson(Long id, String username, Double weight, Double height, BigDecimal bodyFat) {
         Person user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Person not found with ID: " + id));
-
 
         if (username != null) {
             user.setUsername(username);

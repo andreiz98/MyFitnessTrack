@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ProductStatsDto {
     private Long id;
-    private Long energyValue;
+    private Double energyValue;
     private Double fats;
     private Double carbs;
     private Double sugar;

@@ -1,6 +1,6 @@
 package com.FitnessTrack.MyFitnessTrack.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "products")
+@Table(name = "products_updated")
 @Entity
-public class Product {
+public class ProductUpdatedPerWeight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,7 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stats_id",referencedColumnName = "id")
-    @JsonManagedReference
-    private ProductStats stats;
-
-    @OneToOne
-    @JoinColumn(referencedColumnName = "id")
-    @JsonManagedReference
-    private ProductUpdatedPerWeight updatedPerWeight;
+    @OneToOne(mappedBy = "updatedPerWeight")
+    @JsonBackReference
+    private Product product;
 }
