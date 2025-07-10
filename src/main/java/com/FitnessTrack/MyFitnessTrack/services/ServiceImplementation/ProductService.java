@@ -41,21 +41,26 @@ public class ProductService implements ProductServices {
     }
 
     @Override
-    public Product addProduct(Product product) {
+    public ProductDto addProduct(ProductDto productDto) {
+        Product product = mapper.convertValue(productDto,Product.class);
         if (product.getWeight() == null && product.getPrice() == null) {
             throw new RuntimeException("Price and weight can t be null");
         } else {
-            return repository.save(product);
+            return mapper.convertValue(repository.save(product), ProductDto.class);
         }
     }
 
     @Override
-    public List<Product> findByNameContainingIgnoreCase(String name) {
-        return repository.findByNameContainingIgnoreCase(name);
+    public List<ProductDto> findByNameContainingIgnoreCase(String name) {
+        List<Product> product = repository.findByNameContainingIgnoreCase(name);
+        return product.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+
     }
 
     @Override
-    public Product updateProduct(Long id, String name, Double price) {
+    public ProductDto updateProduct(Long id, String name, Double price) {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
 
@@ -66,7 +71,7 @@ public class ProductService implements ProductServices {
             product.setPrice(price);
         }
 
-        return repository.save(product);
+        return mapper.convertValue(repository.save(product), ProductDto.class);
     }
 
 }

@@ -1,10 +1,12 @@
 package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation;
 
+import com.FitnessTrack.MyFitnessTrack.model.dto.ProductUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
 import com.FitnessTrack.MyFitnessTrack.model.entities.ProductUpdatedPerWeight;
 import com.FitnessTrack.MyFitnessTrack.repositories.ProductRepository;
 import com.FitnessTrack.MyFitnessTrack.repositories.ProductUpdatedPerWeightRepository;
 import com.FitnessTrack.MyFitnessTrack.services.ProductUpdatedPerWeightServices;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +15,17 @@ public class ProductUpdatedPerWeightService implements ProductUpdatedPerWeightSe
 
     private final ProductRepository productRepository;
     private final ProductUpdatedPerWeightRepository perWeightRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public ProductUpdatedPerWeightService(ProductRepository productRepository, ProductUpdatedPerWeightRepository perWeightRepository) {
+    public ProductUpdatedPerWeightService(ProductRepository productRepository, ProductUpdatedPerWeightRepository perWeightRepository, ObjectMapper mapper) {
         this.productRepository = productRepository;
         this.perWeightRepository = perWeightRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public ProductUpdatedPerWeight findByIdAndUpdatePricePerWeight(Long id, Double weight) {
+    public ProductUpdatedPerWeightDto findByIdAndUpdatePricePerWeight(Long id, Double weight) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
 
@@ -30,6 +34,6 @@ public class ProductUpdatedPerWeightService implements ProductUpdatedPerWeightSe
         updatedPerWeight.setName(product.getName());
         updatedPerWeight.setWeight(weight);
         updatedPerWeight.setPrice(newPrice);
-        return perWeightRepository.save(updatedPerWeight);
+        return mapper.convertValue(perWeightRepository.save(updatedPerWeight), ProductUpdatedPerWeightDto.class);
     }
 }

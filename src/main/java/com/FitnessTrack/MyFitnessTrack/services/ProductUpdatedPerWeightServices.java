@@ -1,8 +1,9 @@
 package com.FitnessTrack.MyFitnessTrack.services;
 
 
+import com.FitnessTrack.MyFitnessTrack.model.dto.ProductUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.ProductUpdatedPerWeight;
 
 public interface ProductUpdatedPerWeightServices {
-    ProductUpdatedPerWeight findByIdAndUpdatePricePerWeight(Long id, Double weight);
+    ProductUpdatedPerWeightDto findByIdAndUpdatePricePerWeight(Long id, Double weight);
 }
