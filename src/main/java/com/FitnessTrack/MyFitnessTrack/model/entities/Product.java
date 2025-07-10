@@ -23,13 +23,11 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stats_id",referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
     @JsonManagedReference
     private ProductStats stats;
 
-    @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
     @JsonManagedReference
     private ProductUpdatedPerWeight updatedPerWeight;
 }

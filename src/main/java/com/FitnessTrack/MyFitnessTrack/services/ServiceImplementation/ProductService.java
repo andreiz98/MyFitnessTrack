@@ -2,6 +2,7 @@ package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation;
 
 import com.FitnessTrack.MyFitnessTrack.model.dto.ProductDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
+import com.FitnessTrack.MyFitnessTrack.model.entities.ProductStats;
 import com.FitnessTrack.MyFitnessTrack.model.entities.ProductUpdatedPerWeight;
 import com.FitnessTrack.MyFitnessTrack.repositories.ProductRepository;
 import com.FitnessTrack.MyFitnessTrack.services.ProductServices;
@@ -35,27 +36,25 @@ public class ProductService implements ProductServices {
                 .collect(Collectors.toList());
     }
 
+
+
     @Override
     public void deleteProductById(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    public ProductDto addProduct(ProductDto productDto) {
-        Product product = mapper.convertValue(productDto,Product.class);
+    public Product addProduct(Product product) {
         if (product.getWeight() == null && product.getPrice() == null) {
             throw new RuntimeException("Price and weight can t be null");
         } else {
-            return mapper.convertValue(repository.save(product), ProductDto.class);
+            return repository.save(product);
         }
     }
 
     @Override
-    public List<ProductDto> findByNameContainingIgnoreCase(String name) {
-        List<Product> product = repository.findByNameContainingIgnoreCase(name);
-        return product.stream()
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
+    public List<Product> findByNameContainingIgnoreCase(String name) {
+        return repository.findByNameContainingIgnoreCase(name);
 
     }
 

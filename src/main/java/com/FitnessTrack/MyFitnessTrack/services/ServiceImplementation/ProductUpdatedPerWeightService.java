@@ -31,6 +31,7 @@ public class ProductUpdatedPerWeightService implements ProductUpdatedPerWeightSe
 
         ProductUpdatedPerWeight updatedPerWeight = new ProductUpdatedPerWeight();
         Double newPrice = (weight * product.getPrice()) / product.getWeight();
+        updatedPerWeight.setProduct(product);
         updatedPerWeight.setName(product.getName());
         updatedPerWeight.setWeight(weight);
         updatedPerWeight.setPrice(newPrice);

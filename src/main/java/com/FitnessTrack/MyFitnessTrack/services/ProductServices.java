@@ -8,8 +8,8 @@ import java.util.List;
 public interface ProductServices {
     List<ProductDto> findAllProducts();
     void deleteProductById(Long id);
-    ProductDto addProduct(ProductDto product);
-    List<ProductDto> findByNameContainingIgnoreCase(String name);
+    Product addProduct(Product product);
+    List<Product> findByNameContainingIgnoreCase(String name);
     ProductDto updateProduct(Long id, String name, Double price);
 
 }

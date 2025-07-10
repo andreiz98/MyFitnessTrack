@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class ProductUpdatedPerWeight {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -23,7 +22,9 @@ public class ProductUpdatedPerWeight {
     @Column(name = "price")
     private Double price;
 
-    @OneToOne(mappedBy = "updatedPerWeight")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
     @JsonBackReference
     private Product product;
 }

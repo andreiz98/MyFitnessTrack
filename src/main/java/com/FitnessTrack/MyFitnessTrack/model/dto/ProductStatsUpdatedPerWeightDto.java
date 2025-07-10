@@ -1,9 +1,11 @@
 package com.FitnessTrack.MyFitnessTrack.model.dto;
 
+
 import lombok.Data;
 
 @Data
-public class ProductStatsDto {
+public class ProductStatsUpdatedPerWeightDto {
+
     private Long id;
     private Double calories;
     private Double fats;

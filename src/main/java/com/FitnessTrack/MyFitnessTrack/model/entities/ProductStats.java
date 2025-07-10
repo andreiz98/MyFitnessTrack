@@ -10,15 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "product_info")
+@Table(name = "product_stats")
 @Entity
 public class ProductStats {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "energy_value")
-    private Double energyValue;
+    @Column(name = "calories")
+    private Double calories;
     @Column(name = "fats")
     private Double fats;
     @Column(name = "carbs")
@@ -32,8 +31,14 @@ public class ProductStats {
     @Column(name = "salt")
     private Double salt;
 
-    @OneToOne(mappedBy = "stats")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
     @JsonBackReference
     private Product product;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "productStats")
+    @JsonManagedReference
+    private ProductStatsUpdatedPerWeight statsUpdatedPerWeight;
 
 }

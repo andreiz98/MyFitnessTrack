@@ -16,9 +16,9 @@ name VARCHAR(100),
 weight NUMERIC(5,2),
 price NUMERIC(5,2));
 
-CREATE TABLE if not exists product_info (
+CREATE TABLE if not exists product_stats (
 id Serial primary key,
-energy_value NUMERIC(5,2),
+calories NUMERIC(5,2),
 fats NUMERIC(5,2),
 carbs NUMERIC(5,2),
 sugar NUMERIC(5,2),

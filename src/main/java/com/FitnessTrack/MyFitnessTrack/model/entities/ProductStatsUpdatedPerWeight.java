@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "product_info")
+@Table(name = "product_stats_updated")
 @Entity
 public class ProductStatsUpdatedPerWeight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "energy_value")
-    private Double energyValue;
+    @Column(name = "calories")
+    private Double calories;
     @Column(name = "fats")
     private Double fats;
     @Column(name = "carbs")
@@ -30,7 +30,9 @@ public class ProductStatsUpdatedPerWeight {
     @Column(name = "salt")
     private Double salt;
 
-    @OneToOne(mappedBy = "updatedPerWeight")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
     @JsonBackReference
     private ProductStats productStats;
 }
