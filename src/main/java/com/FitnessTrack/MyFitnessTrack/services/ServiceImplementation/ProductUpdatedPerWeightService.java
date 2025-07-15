@@ -29,7 +29,9 @@ public class ProductUpdatedPerWeightService implements ProductUpdatedPerWeightSe
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
 
-        ProductUpdatedPerWeight updatedPerWeight = new ProductUpdatedPerWeight();
+        ProductUpdatedPerWeight updatedPerWeight = perWeightRepository.findById(id)
+                .orElse(new ProductUpdatedPerWeight());
+
         Double newPrice = (weight * product.getPrice()) / product.getWeight();
         updatedPerWeight.setProduct(product);
         updatedPerWeight.setName(product.getName());

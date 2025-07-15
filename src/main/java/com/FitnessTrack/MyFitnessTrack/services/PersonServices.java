@@ -14,5 +14,6 @@ public interface PersonServices {
     void deleteUserById(Long id);
     Person addUser(Person user);
     Optional<Person> findByUsername(String username);
-    Person updatePerson(Long id, String username, Double weight, Double height, BigDecimal bodyFat);
+    Person updatePerson(Long id, String username, Double weight, Double height);
+    void setStatsByUsername(Person person);
 }

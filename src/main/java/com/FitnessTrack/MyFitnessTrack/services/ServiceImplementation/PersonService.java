@@ -36,6 +36,12 @@ public class PersonService implements PersonServices {
         usersDto.setWeight(users.getWeight());
         usersDto.setHeight(users.getHeight());
         usersDto.setBodyFat(users.getBodyFat());
+        usersDto.setObjective(users.getObjective());
+        usersDto.setActivity(users.getActivity());
+        usersDto.setCalories(users.getCalories());
+        usersDto.setProtein(users.getProtein());
+        usersDto.setCarbs(users.getCarbs());
+        usersDto.setFats(users.getFats());
 
         //set age from date of birth
         int age = Period.between(usersDto.getDateOfBirth(), LocalDate.now()).getYears();
@@ -61,29 +67,82 @@ public class PersonService implements PersonServices {
         repository.deleteById(id);
     }
 
-    public boolean setAgeFromDateOfBirth(Person user) {
-        if (user.getDateOfBirth() == null) {
-            user.setAge(0);
-            return true;
+    private static double round(double value) {
+        return Math.round(value * 100.0) / 100.0;
+    }
+
+    private Double getActivityMultiplier(String activity) {
+        return switch (activity.toLowerCase()) {
+            case "sedentary" -> 1.2;
+            case "light" -> 1.375;
+            case "moderate" -> 1.55;
+            case "active" -> 1.725;
+            case "very active" -> 1.9;
+            default -> 1.2;
+        };
+    }
+
+    private Double adjustCaloriesForGoal(Double calories, String goal) {
+        return switch (goal.toLowerCase()) {
+            case "lose weight", "cutting" -> calories - 500;   // Caloric deficit
+            case "gain muscle", "bulking" -> calories + 500;   // Surplus
+            case "maintain", "maintenance" -> calories;
+            default -> calories;
+        };
+    }
+
+    @Override
+    public void setStatsByUsername(Person person) {
+        Double weight = person.getWeight();
+        Double height = person.getHeight();
+        Integer age = person.getAge();
+        char gender = Character.toLowerCase(person.getSex());
+
+        double BMR = (gender == 'm')
+                ? (10 * weight + 6.25 * height - 5 * age + 5)
+                : (10 * weight + 6.25 * height - 5 * age - 161);
+
+        //set calories
+        Double setActivity = getActivityMultiplier(person.getActivity());
+        Double calories = BMR * setActivity;
+
+        calories = adjustCaloriesForGoal(calories, person.getObjective());
+
+        //set bodyfat
+        double LBM = (gender == 'm')
+                ? (0.407 * weight + 0.267 * height - 19.2)
+                : (0.252 * weight + 0.473 * height - 48.3);
+
+        double bodyFat = (1 - (BMR - 370) / (21.6 * LBM)) * 100;
+
+        if (bodyFat < 0 || bodyFat >=10 || Double.isNaN(bodyFat)){
+            bodyFat = 10;
         }
 
-        int age = Period.between(user.getDateOfBirth(), LocalDate.now()).getYears();
-        if (age < 15){
-            return true;
-        }
-        user.setAge(age);
-        return false;
+        double protein = (calories * 0.40) / 4; // 4 cal per gram
+        double carbs = (calories * 0.20) / 4; // 4 cal per gram
+        double fats = (calories * 0.40) / 9; // 9 cal per gram
+
+        person.setCalories(round(calories));
+        person.setProtein(round(protein));
+        person.setCarbs(round(carbs));
+        person.setFats(round(fats));
+        person.setBodyFat(bodyFat);
     }
 
     @Override
     public Person addUser(Person person) {
-        char gender = Character.toLowerCase(person.getSex());
-        if (gender != 'm' && gender != 'f') {
-            throw new RuntimeException("Please enter your gender as 'M' or 'F'");
-        } else if (setAgeFromDateOfBirth(person)) {
-            throw new RuntimeException("Legal age for this app is 16 or more");
+        isUnderage(person);
+        setStatsByUsername(person);
+        return repository.save(person);
+    }
+
+    public void isUnderage(Person user) {
+        if (user.getDateOfBirth() == null) {
+            user.setAge(0);
         } else {
-            return repository.save(person);
+            int age = Period.between(user.getDateOfBirth(), LocalDate.now()).getYears();
+            user.setAge(age);
         }
     }
 
@@ -93,7 +152,7 @@ public class PersonService implements PersonServices {
     }
 
     @Override
-    public Person updatePerson(Long id, String username, Double weight, Double height, BigDecimal bodyFat) {
+    public Person updatePerson(Long id, String username, Double weight, Double height) {
         Person user = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Person not found with ID: " + id));
 
@@ -106,9 +165,9 @@ public class PersonService implements PersonServices {
         if (height != null) {
             user.setHeight(height);
         }
-        if (bodyFat != null) {
-            user.setBodyFat(bodyFat);
-        }
+
+        //recalculate macronutrients
+        setStatsByUsername(user);
 
         // Recalculate age
         if (user.getDateOfBirth() != null) {
@@ -118,5 +177,4 @@ public class PersonService implements PersonServices {
 
         return repository.save(user);
     }
-
 }

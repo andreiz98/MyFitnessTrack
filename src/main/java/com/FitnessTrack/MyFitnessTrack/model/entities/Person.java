@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -18,22 +17,36 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "lastname")
+    @Column(name = "lastname", nullable = false)
     private String lastname;
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private Integer age;
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
-    @Column(name = "sex")
+    @Column(name = "sex", nullable = false)
     private char sex;
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private Double weight;
-    @Column(name = "height")
+    @Column(name = "height", nullable = false)
     private Double height;
-    @Column(name = "body_fat", precision = 5, scale = 2)
-    private BigDecimal bodyFat;
+    @Column(name = "body_fat")
+    private Double bodyFat;
+
+    //set custom objective
+    @Column(name = "objective", nullable = false)
+    private String objective;
+    @Column(name = "activity", nullable = false)
+    private String activity;
+    @Column(name = "calories_needed")
+    private Double calories;
+    @Column(name = "protein")
+    private Double protein;
+    @Column(name = "carbs")
+    private Double carbs;
+    @Column(name = "fats")
+    private Double fats;
 }

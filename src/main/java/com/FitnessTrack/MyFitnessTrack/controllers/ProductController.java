@@ -4,19 +4,13 @@ import com.FitnessTrack.MyFitnessTrack.model.dto.ProductDto;
 import com.FitnessTrack.MyFitnessTrack.model.dto.ProductStatsUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.dto.ProductUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductStatsUpdatedPerWeight;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductUpdatedPerWeight;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.ProductService;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.ProductStatsUpdatedPerWeightService;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.ProductUpdatedPerWeightService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -56,6 +50,8 @@ public class ProductController {
     public ResponseEntity<ProductStatsUpdatedPerWeightDto> findByIdAndUpdateStatsPerWeight(@PathVariable Long id){
         return ResponseEntity.ok(statsUpdatedPerWeightService.findByIdAndUpdateStatsPerWeight(id));
     }
+
+    //get all product used by user id
 
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {

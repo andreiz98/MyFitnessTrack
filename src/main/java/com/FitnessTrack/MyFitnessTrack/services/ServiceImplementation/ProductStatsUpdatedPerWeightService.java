@@ -46,7 +46,9 @@ public class ProductStatsUpdatedPerWeightService implements ProductStatsUpdatedP
         ProductUpdatedPerWeight productUpdatedPerWeight = updatedPerWeightRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Updated weight not found for product with ID: " + id));
 
-        ProductStatsUpdatedPerWeight statsUpdatedPerWeight = new ProductStatsUpdatedPerWeight();
+        ProductStatsUpdatedPerWeight statsUpdatedPerWeight = statsUpdatedPerWeightRepository.findById(id)
+                .orElse(new ProductStatsUpdatedPerWeight());
+
         statsUpdatedPerWeight.setProductStats(productStats);
         statsUpdatedPerWeight.setCalories(scale(productStats.getCalories(), productUpdatedPerWeight.getWeight()));
         statsUpdatedPerWeight.setFats(scale(productStats.getFats(), productUpdatedPerWeight.getWeight()));

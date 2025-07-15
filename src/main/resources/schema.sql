@@ -8,7 +8,13 @@ date_of_birth DATE,
 sex VARCHAR(1),
 weight NUMERIC(5,2),
 height NUMERIC(5,2),
-body_fat NUMERIC(5,2));
+body_fat NUMERIC(5,2),
+activity VARCHAR(50),
+objective VARCHAR(50),
+calories_needed NUMERIC(5,2),
+protein NUMERIC(5,2),
+carbs NUMERIC(5,2),
+fats VARCHAR(50));
 
 CREATE TABLE if not exists products (
 id Serial primary key,

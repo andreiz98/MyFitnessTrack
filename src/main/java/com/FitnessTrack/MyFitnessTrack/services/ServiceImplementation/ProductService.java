@@ -2,8 +2,6 @@ package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation;
 
 import com.FitnessTrack.MyFitnessTrack.model.dto.ProductDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductStats;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductUpdatedPerWeight;
 import com.FitnessTrack.MyFitnessTrack.repositories.ProductRepository;
 import com.FitnessTrack.MyFitnessTrack.services.ProductServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +53,6 @@ public class ProductService implements ProductServices {
     @Override
     public List<Product> findByNameContainingIgnoreCase(String name) {
         return repository.findByNameContainingIgnoreCase(name);
-
     }
 
     @Override

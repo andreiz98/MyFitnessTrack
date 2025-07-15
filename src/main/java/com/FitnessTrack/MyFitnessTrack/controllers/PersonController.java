@@ -3,6 +3,8 @@ package com.FitnessTrack.MyFitnessTrack.controllers;
 import com.FitnessTrack.MyFitnessTrack.model.dto.PersonDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Person;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.PersonService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usersList")
-public class UsersController {
+public class PersonController {
 
     private final PersonService service;
+    private ObjectMapper mapper;
 
     @Autowired
-    public UsersController(PersonService service) {
+    public PersonController(PersonService service, ObjectMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @GetMapping
@@ -34,9 +38,9 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Person> addUser(@RequestBody Person person) {
-        Person saveUser = service.addUser(person);
-        return ResponseEntity.ok(saveUser);
+    public ResponseEntity<?> addUser(@Valid @RequestBody PersonDto personDto) {
+        Person saveUser = mapper.convertValue(personDto, Person.class);
+        return ResponseEntity.ok(service.addUser(saveUser));
     }
 
     @DeleteMapping("/{id}")
@@ -48,10 +52,8 @@ public class UsersController {
     public ResponseEntity<Person> updatePersonById(@PathVariable Long id,
                                                    @RequestParam(required = false) String username,
                                                    @RequestParam(required = false) Double weight,
-                                                   @RequestParam(required = false) Double height,
-                                                   @RequestParam(required = false) BigDecimal bodyFat
+                                                   @RequestParam(required = false) Double height
                                                       ){
-        return ResponseEntity.ok(service.updatePerson(id,username,weight,height,bodyFat));
+        return ResponseEntity.ok(service.updatePerson(id,username,weight,height));
     }
-
 }
