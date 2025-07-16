@@ -1,4 +1,4 @@
-package com.FitnessTrack.MyFitnessTrack.model.entities;
+package com.FitnessTrack.MyFitnessTrack.model.entities.products;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

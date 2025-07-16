@@ -1,4 +1,4 @@
-TRUNCATE TABLE person RESTART IDENTITY;
+TRUNCATE TABLE person RESTART IDENTITY CASCADE;
 
 INSERT INTO person
   (name, lastname, username, date_of_birth, sex, weight, height,body_fat)

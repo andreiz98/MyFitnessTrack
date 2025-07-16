@@ -1,11 +1,9 @@
-package com.FitnessTrack.MyFitnessTrack.model.dto;
-
+package com.FitnessTrack.MyFitnessTrack.model.dto.product;
 
 import lombok.Data;
 
 @Data
-public class ProductStatsUpdatedPerWeightDto {
-
+public class ProductStatsDto {
     private Long id;
     private Double calories;
     private Double fats;

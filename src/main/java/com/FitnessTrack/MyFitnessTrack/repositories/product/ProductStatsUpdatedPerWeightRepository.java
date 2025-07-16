@@ -1,6 +1,6 @@
-package com.FitnessTrack.MyFitnessTrack.repositories;
+package com.FitnessTrack.MyFitnessTrack.repositories.product;
 
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductStatsUpdatedPerWeight;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductStatsUpdatedPerWeight;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductStatsUpdatedPerWeightRepository extends JpaRepository<ProductStatsUpdatedPerWeight, Long> {

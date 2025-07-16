@@ -1,14 +1,14 @@
-package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation;
+package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product;
 
-import com.FitnessTrack.MyFitnessTrack.model.dto.ProductStatsUpdatedPerWeightDto;
-import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductStats;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductStatsUpdatedPerWeight;
-import com.FitnessTrack.MyFitnessTrack.model.entities.ProductUpdatedPerWeight;
-import com.FitnessTrack.MyFitnessTrack.repositories.ProductRepository;
-import com.FitnessTrack.MyFitnessTrack.repositories.ProductStatsUpdatedPerWeightRepository;
-import com.FitnessTrack.MyFitnessTrack.repositories.ProductUpdatedPerWeightRepository;
-import com.FitnessTrack.MyFitnessTrack.services.ProductStatsUpdatedPerWeightServices;
+import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductStatsUpdatedPerWeightDto;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductStats;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductStatsUpdatedPerWeight;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductUpdatedPerWeight;
+import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductRepository;
+import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductStatsUpdatedPerWeightRepository;
+import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductUpdatedPerWeightRepository;
+import com.FitnessTrack.MyFitnessTrack.services.productService.ProductStatsUpdatedPerWeightServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

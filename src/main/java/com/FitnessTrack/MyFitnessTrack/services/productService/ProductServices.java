@@ -1,7 +1,7 @@
-package com.FitnessTrack.MyFitnessTrack.services;
+package com.FitnessTrack.MyFitnessTrack.services.productService;
 
-import com.FitnessTrack.MyFitnessTrack.model.dto.ProductDto;
-import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
+import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductDto;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
 
 import java.util.List;
 

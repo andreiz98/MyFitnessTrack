@@ -1,9 +1,9 @@
-package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation;
+package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product;
 
-import com.FitnessTrack.MyFitnessTrack.model.dto.ProductDto;
-import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
-import com.FitnessTrack.MyFitnessTrack.repositories.ProductRepository;
-import com.FitnessTrack.MyFitnessTrack.services.ProductServices;
+import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductDto;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
+import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductRepository;
+import com.FitnessTrack.MyFitnessTrack.services.productService.ProductServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

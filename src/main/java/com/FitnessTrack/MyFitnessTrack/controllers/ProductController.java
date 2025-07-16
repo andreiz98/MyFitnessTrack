@@ -1,12 +1,8 @@
 package com.FitnessTrack.MyFitnessTrack.controllers;
 
-import com.FitnessTrack.MyFitnessTrack.model.dto.ProductDto;
-import com.FitnessTrack.MyFitnessTrack.model.dto.ProductStatsUpdatedPerWeightDto;
-import com.FitnessTrack.MyFitnessTrack.model.dto.ProductUpdatedPerWeightDto;
-import com.FitnessTrack.MyFitnessTrack.model.entities.Product;
-import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.ProductService;
-import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.ProductStatsUpdatedPerWeightService;
-import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.ProductUpdatedPerWeightService;
+import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductDto;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
+import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +14,10 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService service;
-    private final ProductUpdatedPerWeightService updatedPerWeightService;
-    private final ProductStatsUpdatedPerWeightService statsUpdatedPerWeightService;
 
     @Autowired
-    public ProductController(ProductService service,
-                             ProductUpdatedPerWeightService updatedPerWeightService,
-                             ProductStatsUpdatedPerWeightService statsUpdatedPerWeightService) {
+    public ProductController(ProductService service) {
         this.service = service;
-        this.updatedPerWeightService = updatedPerWeightService;
-        this.statsUpdatedPerWeightService = statsUpdatedPerWeightService;
     }
 
     @GetMapping
@@ -39,19 +29,6 @@ public class ProductController {
     public ResponseEntity<List<Product>> findByName(@RequestParam String productName) {
         return ResponseEntity.ok(service.findByNameContainingIgnoreCase(productName));
     }
-
-    @PutMapping("/productInfo/{id}")
-    public ResponseEntity<ProductUpdatedPerWeightDto> findByIdAndUpdatePricePerWeight(@PathVariable Long id,
-                                                                                      @RequestParam Double weight) {
-        return ResponseEntity.ok(updatedPerWeightService.findByIdAndUpdatePricePerWeight(id, weight));
-    }
-
-    @PutMapping("/productStats/{id}")
-    public ResponseEntity<ProductStatsUpdatedPerWeightDto> findByIdAndUpdateStatsPerWeight(@PathVariable Long id){
-        return ResponseEntity.ok(statsUpdatedPerWeightService.findByIdAndUpdateStatsPerWeight(id));
-    }
-
-    //get all product used by user id
 
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {

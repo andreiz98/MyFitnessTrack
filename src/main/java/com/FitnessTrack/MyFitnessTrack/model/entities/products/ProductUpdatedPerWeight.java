@@ -1,6 +1,8 @@
-package com.FitnessTrack.MyFitnessTrack.model.entities;
+package com.FitnessTrack.MyFitnessTrack.model.entities.products;
 
+import com.FitnessTrack.MyFitnessTrack.model.entities.MealItem;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

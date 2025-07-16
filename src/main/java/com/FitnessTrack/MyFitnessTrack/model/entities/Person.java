@@ -1,5 +1,6 @@
 package com.FitnessTrack.MyFitnessTrack.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,4 +50,8 @@ public class Person {
     private Double carbs;
     @Column(name = "fats")
     private Double fats;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
+    @JsonManagedReference("person-meals")
+    private Meals meals;
 }
