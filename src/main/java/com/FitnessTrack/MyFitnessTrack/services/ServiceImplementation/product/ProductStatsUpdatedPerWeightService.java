@@ -1,5 +1,6 @@
 package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product;
 
+import com.FitnessTrack.MyFitnessTrack.ClassMapper;
 import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductStatsUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
 import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductStats;
@@ -9,7 +10,6 @@ import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductRepository;
 import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductStatsUpdatedPerWeightRepository;
 import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductUpdatedPerWeightRepository;
 import com.FitnessTrack.MyFitnessTrack.services.productService.ProductStatsUpdatedPerWeightServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +19,13 @@ public class ProductStatsUpdatedPerWeightService implements ProductStatsUpdatedP
     private final ProductRepository productRepository;
     private final ProductStatsUpdatedPerWeightRepository statsUpdatedPerWeightRepository;
     private final ProductUpdatedPerWeightRepository updatedPerWeightRepository;
-    private final ObjectMapper mapper;
+    private final ClassMapper mapper;
 
     @Autowired
     public ProductStatsUpdatedPerWeightService(ProductRepository productRepository,
                                                ProductStatsUpdatedPerWeightRepository statsUpdatedPerWeightRepository, 
                                                ProductUpdatedPerWeightRepository updatedPerWeightRepository,
-                                               ObjectMapper mapper) {
+                                               ClassMapper mapper) {
         this.productRepository = productRepository;
         this.statsUpdatedPerWeightRepository = statsUpdatedPerWeightRepository;
         this.updatedPerWeightRepository = updatedPerWeightRepository;
@@ -58,6 +58,6 @@ public class ProductStatsUpdatedPerWeightService implements ProductStatsUpdatedP
         statsUpdatedPerWeight.setProtein(scale(productStats.getProtein(), productUpdatedPerWeight.getWeight()));
         statsUpdatedPerWeight.setSalt(scale(productStats.getSalt(), productUpdatedPerWeight.getWeight()));
 
-        return mapper.convertValue(statsUpdatedPerWeightRepository.save(statsUpdatedPerWeight), ProductStatsUpdatedPerWeightDto.class);
+        return mapper.toDto(statsUpdatedPerWeightRepository.save(statsUpdatedPerWeight));
     }
 }

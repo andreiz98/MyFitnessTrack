@@ -1,15 +1,14 @@
 package com.FitnessTrack.MyFitnessTrack.controllers;
 
+import com.FitnessTrack.MyFitnessTrack.ClassMapper;
 import com.FitnessTrack.MyFitnessTrack.model.dto.PersonDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Person;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.PersonService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +17,10 @@ import java.util.Optional;
 public class PersonController {
 
     private final PersonService service;
-    private ObjectMapper mapper;
+    private final ClassMapper mapper;
 
     @Autowired
-    public PersonController(PersonService service, ObjectMapper mapper) {
+    public PersonController(PersonService service, ClassMapper mapper) {
         this.service = service;
         this.mapper = mapper;
     }
@@ -39,7 +38,7 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<?> addUser(@Valid @RequestBody PersonDto personDto) {
-        Person saveUser = mapper.convertValue(personDto, Person.class);
+        Person saveUser = mapper.ToEntity(personDto);
         return ResponseEntity.ok(service.addUser(saveUser));
     }
 

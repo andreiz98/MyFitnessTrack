@@ -1,10 +1,10 @@
 package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product;
 
+import com.FitnessTrack.MyFitnessTrack.ClassMapper;
 import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
 import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductRepository;
 import com.FitnessTrack.MyFitnessTrack.services.productService.ProductServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +15,18 @@ import java.util.stream.Collectors;
 public class ProductService implements ProductServices {
 
     private final ProductRepository repository;
-    private final ObjectMapper mapper;
+    private final ClassMapper mapper;
 
     @Autowired
-    public ProductService(ProductRepository repository, ObjectMapper mapper) {
+    public ProductService(ProductRepository repository, ClassMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
-    }
-
-    private ProductDto entityToDto(Product product) {
-        return mapper.convertValue(product, ProductDto.class);
     }
 
     @Override
     public List<ProductDto> findAllProducts() {
         return repository.findAll().stream()
-                .map(this::entityToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -51,8 +47,10 @@ public class ProductService implements ProductServices {
     }
 
     @Override
-    public List<Product> findByNameContainingIgnoreCase(String name) {
-        return repository.findByNameContainingIgnoreCase(name);
+    public List<ProductDto> findByNameContainingIgnoreCase(String name) {
+        return repository.findByNameContainingIgnoreCase(name).stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Override
@@ -67,7 +65,7 @@ public class ProductService implements ProductServices {
             product.setPrice(price);
         }
 
-        return mapper.convertValue(repository.save(product), ProductDto.class);
+        return mapper.toDto(repository.save(product));
     }
 
 }

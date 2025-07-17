@@ -1,6 +1,7 @@
 package com.FitnessTrack.MyFitnessTrack.model.entities;
 
 import com.FitnessTrack.MyFitnessTrack.model.MealType;
+import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,12 +25,11 @@ public class MealItem {
     @Column(name = "price")
     private Double price;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "meal_type")
-    private MealType mealType;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "meals_id", nullable = false)
-    @JsonBackReference("meals-items")
+    @ManyToOne
+    @JoinColumn(name = "meals_id")
     private Meals meals;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

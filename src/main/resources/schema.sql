@@ -14,7 +14,7 @@ objective VARCHAR(50),
 calories_needed NUMERIC(5,2),
 protein NUMERIC(5,2),
 carbs NUMERIC(5,2),
-fats VARCHAR(50));
+fats NUMERIC(5,2));
 
 CREATE TABLE if not exists products (
 id Serial primary key,

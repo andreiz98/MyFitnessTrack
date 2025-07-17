@@ -1,13 +1,11 @@
 package com.FitnessTrack.MyFitnessTrack.controllers;
 
-import com.FitnessTrack.MyFitnessTrack.model.dto.MealItemDto;
 import com.FitnessTrack.MyFitnessTrack.model.dto.MealsDto;
 import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductStatsUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.MealService;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product.ProductStatsUpdatedPerWeightService;
 import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product.ProductUpdatedPerWeightService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +30,9 @@ public class MealsController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<MealsDto> addMeals(@PathVariable Long id,
-                                          @RequestBody @Valid List<MealItemDto> mealItem){
-        MealsDto mealsDto = mealService.addMeals(id, mealItem);
-        return ResponseEntity.ok(mealsDto);
+    public ResponseEntity<MealsDto> addMeal(@PathVariable Long id,
+                                          @RequestBody MealsDto mealDto) {
+        return ResponseEntity.ok(mealService.addMeal(id, mealDto));
     }
 
     @GetMapping

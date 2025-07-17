@@ -9,7 +9,7 @@ public interface ProductServices {
     List<ProductDto> findAllProducts();
     void deleteProductById(Long id);
     Product addProduct(Product product);
-    List<Product> findByNameContainingIgnoreCase(String name);
+    List<ProductDto> findByNameContainingIgnoreCase(String name);
     ProductDto updateProduct(Long id, String name, Double price);
 
 }

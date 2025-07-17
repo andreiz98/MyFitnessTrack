@@ -1,12 +1,12 @@
 package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.product;
 
+import com.FitnessTrack.MyFitnessTrack.ClassMapper;
 import com.FitnessTrack.MyFitnessTrack.model.dto.product.ProductUpdatedPerWeightDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.products.Product;
 import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductUpdatedPerWeight;
 import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductRepository;
 import com.FitnessTrack.MyFitnessTrack.repositories.product.ProductUpdatedPerWeightRepository;
 import com.FitnessTrack.MyFitnessTrack.services.productService.ProductUpdatedPerWeightServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +15,12 @@ public class ProductUpdatedPerWeightService implements ProductUpdatedPerWeightSe
 
     private final ProductRepository productRepository;
     private final ProductUpdatedPerWeightRepository perWeightRepository;
-    private final ObjectMapper mapper;
+    private final ClassMapper mapper;
 
     @Autowired
-    public ProductUpdatedPerWeightService(ProductRepository productRepository, ProductUpdatedPerWeightRepository perWeightRepository, ObjectMapper mapper) {
+    public ProductUpdatedPerWeightService(ProductRepository productRepository,
+                                          ProductUpdatedPerWeightRepository perWeightRepository,
+                                          ClassMapper mapper) {
         this.productRepository = productRepository;
         this.perWeightRepository = perWeightRepository;
         this.mapper = mapper;
@@ -37,6 +39,6 @@ public class ProductUpdatedPerWeightService implements ProductUpdatedPerWeightSe
         updatedPerWeight.setName(product.getName());
         updatedPerWeight.setWeight(weight);
         updatedPerWeight.setPrice(newPrice);
-        return mapper.convertValue(perWeightRepository.save(updatedPerWeight), ProductUpdatedPerWeightDto.class);
+        return mapper.toDto(perWeightRepository.save(updatedPerWeight));
     }
 }

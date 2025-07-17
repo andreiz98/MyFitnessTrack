@@ -1,5 +1,6 @@
 package com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation;
 
+import com.FitnessTrack.MyFitnessTrack.ClassMapper;
 import com.FitnessTrack.MyFitnessTrack.model.dto.PersonDto;
 import com.FitnessTrack.MyFitnessTrack.model.entities.Person;
 import com.FitnessTrack.MyFitnessTrack.repositories.PersonRepository;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -19,29 +19,16 @@ import java.util.Optional;
 public class PersonService implements PersonServices {
 
     private final PersonRepository repository;
+    private final ClassMapper mapper;
 
     @Autowired
-    public PersonService(PersonRepository repository) {
+    public PersonService(PersonRepository repository, ClassMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     private void entityToDto(List<PersonDto> userDtos, Person users) {
-        PersonDto usersDto = new PersonDto();
-        usersDto.setId(users.getId());
-        usersDto.setName(users.getName());
-        usersDto.setLastname(users.getLastname());
-        usersDto.setUsername(users.getUsername());
-        usersDto.setDateOfBirth(users.getDateOfBirth());
-        usersDto.setSex(String.valueOf(users.getSex()));
-        usersDto.setWeight(users.getWeight());
-        usersDto.setHeight(users.getHeight());
-        usersDto.setBodyFat(users.getBodyFat());
-        usersDto.setObjective(users.getObjective());
-        usersDto.setActivity(users.getActivity());
-        usersDto.setCalories(users.getCalories());
-        usersDto.setProtein(users.getProtein());
-        usersDto.setCarbs(users.getCarbs());
-        usersDto.setFats(users.getFats());
+        PersonDto usersDto = mapper.toDto(users);
 
         //set age from date of birth
         int age = Period.between(usersDto.getDateOfBirth(), LocalDate.now()).getYears();

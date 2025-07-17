@@ -1,7 +1,6 @@
 package com.FitnessTrack.MyFitnessTrack.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.FitnessTrack.MyFitnessTrack.model.MealType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,15 +16,16 @@ import java.util.List;
 public class Meals {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @MapsId
+    @Enumerated(EnumType.STRING)
+    private MealType mealType;
+
+    @ManyToOne
     @JoinColumn(name = "person_id")
-    @JsonBackReference("person-meals")
     private Person person;
 
     @OneToMany(mappedBy = "meals", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("meals-items")
-    private List<MealItem> mealItems;
+    private List<MealItem> mealItem;
 }

@@ -1,5 +1,7 @@
 package com.FitnessTrack.MyFitnessTrack.model.entities;
 
+import com.FitnessTrack.MyFitnessTrack.model.MealType;
+import com.FitnessTrack.MyFitnessTrack.model.dto.MealsDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -51,7 +55,6 @@ public class Person {
     @Column(name = "fats")
     private Double fats;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-    @JsonManagedReference("person-meals")
-    private Meals meals;
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Meals> meals = new ArrayList<>();
 }

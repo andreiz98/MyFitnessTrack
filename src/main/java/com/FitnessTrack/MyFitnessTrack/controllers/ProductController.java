@@ -26,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/productByName")
-    public ResponseEntity<List<Product>> findByName(@RequestParam String productName) {
+    public ResponseEntity<List<ProductDto>> findByName(@RequestParam String productName) {
         return ResponseEntity.ok(service.findByNameContainingIgnoreCase(productName));
     }
 
