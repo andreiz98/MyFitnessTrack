@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MealsDto {
     private Long personId;
+    private String personUsername;
     private Long id;
     private MealType mealType;
     private List<MealItemDto> mealItem;

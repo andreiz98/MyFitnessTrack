@@ -17,11 +17,16 @@ import com.FitnessTrack.MyFitnessTrack.model.entities.products.ProductUpdatedPer
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 @Mapper(componentModel = "spring")
 public interface ClassMapper {
 
+    @Mapping(target = "age", expression = "java(calculateAge(person.getDateOfBirth()))")
     PersonDto toDto(Person person);
 
+    @Mapping(target = "age", expression = "java(calculateAge(dto.getDateOfBirth()))")
     Person ToEntity(PersonDto dto);
 
     ProductDto toDto(Product product);
@@ -37,6 +42,10 @@ public interface ClassMapper {
     MealItem toEntity(MealItemDto dto);
 
     @Mapping(source = "person.id", target = "personId")
+    @Mapping(source = "person.username", target = "personUsername")
     MealsDto toDto(Meals meals);
-    Meals toEntity(MealsDto dto);
+
+    default int calculateAge(LocalDate dob) {
+        return Period.between(dob, LocalDate.now()).getYears();
+    }
 }

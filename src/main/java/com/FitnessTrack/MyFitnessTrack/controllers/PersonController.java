@@ -7,13 +7,16 @@ import com.FitnessTrack.MyFitnessTrack.services.ServiceImplementation.PersonServ
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/usersList")
+@Validated
 public class PersonController {
 
     private final PersonService service;
@@ -38,8 +41,13 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<?> addUser(@Valid @RequestBody PersonDto personDto) {
-        Person saveUser = mapper.ToEntity(personDto);
-        return ResponseEntity.ok(service.addUser(saveUser));
+        Person person = mapper.ToEntity(personDto);
+        if(person.getAge() < 15){
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error","User must be at least 16 years old."));
+        }
+        return ResponseEntity.ok(service.addUser(person));
     }
 
     @DeleteMapping("/{id}")

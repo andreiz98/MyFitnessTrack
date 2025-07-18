@@ -24,8 +24,6 @@ public class Person {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "lastname", nullable = false)
-    private String lastname;
     @Column(name = "age", nullable = false)
     private Integer age;
     @Column(name = "username", nullable = false)

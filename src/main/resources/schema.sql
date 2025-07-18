@@ -1,7 +1,6 @@
 CREATE TABLE if not exists person (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 name VARCHAR(100),
-lastname VARCHAR(100),
 age INTEGER,
 username VARCHAR(100),
 date_of_birth DATE,

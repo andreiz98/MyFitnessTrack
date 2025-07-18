@@ -2,11 +2,13 @@ package com.FitnessTrack.MyFitnessTrack.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonDto implements Serializable {
@@ -14,13 +16,12 @@ public class PersonDto implements Serializable {
 
     @NotBlank(message = "Name is required")
     private String name;
-    @NotBlank(message = "Last name is required")
-    private String lastname;
     @Min(value = 16, message = "Minimum age is 16")
     private Integer age;
     @NotBlank(message = "Username is required")
     private String username;
     @NotNull(message = "Date of birth is required")
+    @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
     @Pattern(regexp = "[MmFf]", message = "Sex must be 'M' or 'F'")
     private String sex;

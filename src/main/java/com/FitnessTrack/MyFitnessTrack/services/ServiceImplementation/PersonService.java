@@ -27,26 +27,11 @@ public class PersonService implements PersonServices {
         this.mapper = mapper;
     }
 
-    private void entityToDto(List<PersonDto> userDtos, Person users) {
-        PersonDto usersDto = mapper.toDto(users);
-
-        //set age from date of birth
-        int age = Period.between(usersDto.getDateOfBirth(), LocalDate.now()).getYears();
-        if (usersDto.getDateOfBirth() == null) {
-            usersDto.setAge(0);
-            return;
-        } else {
-            usersDto.setAge(age);
-        }
-
-        userDtos.add(usersDto);
-    }
-
     @Override
     public List<PersonDto> findAllUsers() {
-        List<PersonDto> usersDtoList = new ArrayList<>();
-        repository.findAll().forEach(users -> entityToDto(usersDtoList, users));
-        return usersDtoList;
+        return repository.findAll().stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Override
